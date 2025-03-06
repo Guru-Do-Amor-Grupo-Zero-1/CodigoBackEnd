@@ -21,9 +21,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: maven
+      - name: Executar testes
+        run: mvn test -B
 
       - name: Construir o projeto
-        run: mvn clean package
-
-      - name: Executar testes
-        run: mvn test
+        run: mvn clean package -DskipTests -B  
