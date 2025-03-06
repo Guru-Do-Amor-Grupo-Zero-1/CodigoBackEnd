@@ -12,6 +12,21 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgre
+          POSTGRES_DB: gurudoamor
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Clonar o repositório
         uses: actions/checkout@v3
@@ -22,8 +37,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: maven
+
+      - name: Configurar variáveis de ambiente
+        run: |
+          echo "SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/gurudoamor" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_USERNAME=postgres" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_PASSWORD=postgre" >> $GITHUB_ENV
+
       - name: Executar testes
         run: mvn test -B
 
       - name: Construir o projeto
-        run: mvn clean package -DskipTests -B  
+        run: mvn clean package -DskipTests -B
