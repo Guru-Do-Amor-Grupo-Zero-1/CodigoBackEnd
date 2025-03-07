@@ -15,6 +15,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+
     public void deleteUser (final Long id){
         final Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
 

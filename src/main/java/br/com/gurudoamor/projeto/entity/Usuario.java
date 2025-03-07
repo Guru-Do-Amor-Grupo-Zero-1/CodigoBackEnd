@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 
 @Entity
 @Table (name = "usuarios", schema = "public")
@@ -33,15 +32,19 @@ public class Usuario extends AbstractEntity{
     @Lob
     @Column(name = "imagemPerfil")
     private byte[] imagemPerfil;
+    @Getter @Setter
+    @Column(name = "endereco")
+    private String endereco;
 
     public Usuario(){}
 
-    public Usuario(Long id,String nomeUsuario, int telefone, Signos signoUsuario,byte[] imagemPerfil) {
+    public Usuario(Long id,String nomeUsuario, int telefone, Signos signoUsuario,byte[] imagemPerfil, String endereco) {
         this.id = id;
         this.nomeUsuario = nomeUsuario;
         this.telefone = telefone;
         this.signoUsuario = signoUsuario;
         this.imagemPerfil = imagemPerfil;
+        this.endereco = endereco;
     }
 
 }
