@@ -8,11 +8,10 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class MapsService {
 
-    private static final String API_KEY = "AIzaSyA-xybdKKaWtEjHKwTh6Anm3uWwfTi06OU";
+    private static final String API_KEY = "AIzaSyA-xybdKKaWtEjHKwTh6Anm3uWwfTi06OU"; //chave do google cloud
 
     public String calcularRota(String origem, String destino) {
-        String url = String.format("https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s",
-                origem, destino, API_KEY);
+        String url = String.format("https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s", origem, destino, API_KEY);
 
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(url, String.class);
@@ -25,7 +24,7 @@ public class MapsService {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response);
 
-            if (jsonNode.has("routes") && jsonNode.get("routes").size() > 0) {
+            if (jsonNode.has("routes") && !jsonNode.get("routes").isEmpty()) {
                 JsonNode route = jsonNode.get("routes").get(0);
                 JsonNode leg = route.get("legs").get(0);
 

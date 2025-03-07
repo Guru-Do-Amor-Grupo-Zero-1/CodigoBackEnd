@@ -1,7 +1,10 @@
 package br.com.gurudoamor.projeto.service;
 import br.com.gurudoamor.projeto.entity.Usuario;
+import br.com.gurudoamor.projeto.enums.Mensagem;
+import br.com.gurudoamor.projeto.enums.Signos;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -20,13 +23,28 @@ public class MatchService {
         int compatibilidade = new Random().nextInt(100) + 1;
         String distanciaInfo = mapsService.calcularRota(usuario1.getEndereco(), usuario2.getEndereco());
         String combinacaoSignos = usuario1.getSignoUsuario().name() + " + " + usuario2.getSignoUsuario().name();
+        String mensagem = getMensagem(usuario1.getSignoUsuario(), usuario2.getSignoUsuario(), compatibilidade);
 
-        resultado.put("usuario1", usuario1.getNomeUsuario());
-        resultado.put("usuario2", usuario2.getNomeUsuario());
-        resultado.put("compatibilidade", compatibilidade + "%");
-        resultado.put("signos", combinacaoSignos);
-        resultado.put("distancia", distanciaInfo);
+
+        resultado = new LinkedHashMap<>(Map.of(
+                "usuario1", usuario1.getNomeUsuario(),"usuario2", usuario2.getNomeUsuario(), "compatibilidade",
+                compatibilidade + "%",  "signos", combinacaoSignos,"mensagem", mensagem,"distancia", distanciaInfo
+        ));
 
         return resultado;
     }
+
+
+    public String getMensagem(Signos signo1, Signos signo2, int compatibilidade) {
+        String elemento1 = signo1.getElemento();
+        String elemento2 = signo2.getElemento();
+        boolean isAmor = compatibilidade >= 50;
+        String elementoPrimario = elemento1.compareTo(elemento2) < 0 ? elemento1 : elemento2; //altera a ordem dos elementos
+        String elementoSecundario = elemento1.compareTo(elemento2) < 0 ? elemento2 : elemento1;
+
+        return Mensagem.getMensagem(elementoPrimario, elementoSecundario, isAmor);
+    }
+
+
+
 }
