@@ -1,4 +1,5 @@
 package br.com.gurudoamor.projeto.service;
+import br.com.gurudoamor.projeto.dto.MatchResponseDTO;
 import br.com.gurudoamor.projeto.entity.Usuario;
 import br.com.gurudoamor.projeto.enums.Mensagem;
 import br.com.gurudoamor.projeto.enums.Signos;
@@ -18,7 +19,7 @@ public class MatchService {
 
 
 
-    public Map<String, Object> matchUsuarios(Usuario usuario1, Usuario usuario2) {
+    public MatchResponseDTO matchUsuarios(Usuario usuario1, Usuario usuario2) {
         Map<String, Object> resultado = new HashMap<>();
         int compatibilidade = new Random().nextInt(100) + 1;
         String distanciaInfo = mapsService.calcularRota(usuario1.getEndereco(), usuario2.getEndereco());
@@ -26,12 +27,15 @@ public class MatchService {
         String mensagem = getMensagem(usuario1.getSignoUsuario(), usuario2.getSignoUsuario(), compatibilidade);
 
 
-        resultado = new LinkedHashMap<>(Map.of(
-                "usuario1", usuario1.getNomeUsuario(),"usuario2", usuario2.getNomeUsuario(), "compatibilidade",
-                compatibilidade + "%",  "signos", combinacaoSignos,"mensagem", mensagem,"distancia", distanciaInfo
-        ));
 
-        return resultado;
+        return new MatchResponseDTO(
+                usuario1.getNomeUsuario(),
+                usuario2.getNomeUsuario(),
+                compatibilidade + "%",
+                combinacaoSignos,
+                mensagem,
+                distanciaInfo
+        );
     }
 
 
