@@ -1,0 +1,44 @@
+version: "3.8"
+
+networks:
+  app-network:
+    driver: bridge
+  db-network:
+    driver: bridge
+
+services:
+  backend:
+    build: .
+    container_name: guru-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - app-network
+      - db-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/gurudoamor
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgre
+
+  frontend:
+    image: nginx:latest  # Substitua pela imagem real do seu frontend
+    container_name: meu-frontend
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+  db:
+    image: postgres:15
+    container_name: guru-banco
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: gurudoamor
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgre
+    networks:
+      - db-network
