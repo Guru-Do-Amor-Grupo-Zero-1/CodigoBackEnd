@@ -25,7 +25,7 @@ public class Usuario extends AbstractEntity{
     private int telefone;
 
     @Getter @Setter
-    @Column (name = "signoUsuario", length = 15, unique = true)
+    @Column (name = "signoUsuario", length = 15)
     private Signos signoUsuario;
 
     @Getter @Setter
@@ -47,4 +47,43 @@ public class Usuario extends AbstractEntity{
         this.endereco = endereco;
     }
 
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
+    public int getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(int telefone) {
+        this.telefone = telefone;
+    }
+
+    public Signos getSignoUsuario() {
+        return signoUsuario;
+    }
+
+    public void setSignoUsuario(Signos signoUsuario) {
+        this.signoUsuario = signoUsuario;
+    }
+
+    public byte[] getImagemPerfil() {
+        return imagemPerfil;
+    }
+
+    public void setImagemPerfil(byte[] imagemPerfil) {
+        this.imagemPerfil = imagemPerfil;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.gurudoamor.projeto.controller;
 
+import br.com.gurudoamor.projeto.dto.SignoUpdateDTO;
 import br.com.gurudoamor.projeto.entity.Usuario;
 import br.com.gurudoamor.projeto.repository.UsuarioRepository;
 import br.com.gurudoamor.projeto.service.UsuarioService;
@@ -50,6 +51,12 @@ public class UsuarioController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PutMapping("/{id}/signo")
+    public ResponseEntity<?> atualizarSigno(@PathVariable Long id, @RequestBody SignoUpdateDTO request) {
+        usuarioService.atualizarSigno(id, request);
+        return ResponseEntity.ok("Signo atualizado com sucesso.");
     }
 
 }
