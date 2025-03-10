@@ -9,6 +9,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/match")
+@CrossOrigin("*")
 public class MatchController {
 
     @Autowired

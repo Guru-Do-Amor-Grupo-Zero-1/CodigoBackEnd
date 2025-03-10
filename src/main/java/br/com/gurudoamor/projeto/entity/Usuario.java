@@ -22,7 +22,7 @@ public class Usuario extends AbstractEntity{
 
     @Getter @Setter
     @Column (name = "telefone", length = 15, unique = true)
-    private int telefone;
+    private String telefone;
 
     @Getter @Setter
     @Column (name = "signoUsuario", length = 15)
@@ -38,7 +38,7 @@ public class Usuario extends AbstractEntity{
 
     public Usuario(){}
 
-    public Usuario(Long id,String nomeUsuario, int telefone, Signos signoUsuario,byte[] imagemPerfil, String endereco) {
+    public Usuario(Long id,String nomeUsuario, String telefone, Signos signoUsuario,byte[] imagemPerfil, String endereco) {
         this.id = id;
         this.nomeUsuario = nomeUsuario;
         this.telefone = telefone;
@@ -55,11 +55,11 @@ public class Usuario extends AbstractEntity{
         this.nomeUsuario = nomeUsuario;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 

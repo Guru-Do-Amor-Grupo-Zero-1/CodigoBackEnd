@@ -14,6 +14,7 @@ import java.util.List;
 
 @RequestMapping ("/api/usuario")
 @RestController
+@CrossOrigin("*")
 public class UsuarioController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class UsuarioController {
         return ResponseEntity.ok(this.usuarioRepository.findAll());
     }
 
-    @PostMapping
+    @PostMapping("/adicionar")
     public ResponseEntity <HttpStatus> createPedido(@RequestBody final Usuario usuario) {
         try {
             this.usuarioService.save(usuario);
