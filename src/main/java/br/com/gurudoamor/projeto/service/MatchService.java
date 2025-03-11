@@ -22,10 +22,15 @@ public class MatchService {
     public MatchResponseDTO matchUsuarios(Usuario usuario1, Usuario usuario2) {
         Map<String, Object> resultado = new HashMap<>();
         int compatibilidade = new Random().nextInt(100) + 1;
+        String combinacaoSignos = "";
+        String mensagem = "";
         String distanciaInfo = mapsService.calcularRota(usuario1.getEndereco(), usuario2.getEndereco());
-        String combinacaoSignos = usuario1.getSignoUsuario().name() + " + " + usuario2.getSignoUsuario().name();
-        String mensagem = getMensagem(usuario1.getSignoUsuario(), usuario2.getSignoUsuario(), compatibilidade);
-
+        if(usuario1.getSignoUsuario() != null &&  usuario2.getSignoUsuario() != null) {
+        	combinacaoSignos = usuario1.getSignoUsuario().name() + " + " + usuario2.getSignoUsuario().name();
+            mensagem = getMensagem(usuario1.getSignoUsuario(), usuario2.getSignoUsuario(), compatibilidade);
+        }
+        
+        System.out.println("Tamanho da distancia: " + distanciaInfo.length());
 
 
         return new MatchResponseDTO(

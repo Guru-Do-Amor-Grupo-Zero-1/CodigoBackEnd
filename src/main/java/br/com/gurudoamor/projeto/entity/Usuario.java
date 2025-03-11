@@ -35,17 +35,24 @@ public class Usuario extends AbstractEntity{
     @Getter @Setter
     @Column(name = "endereco")
     private String endereco;
+    @Getter
+    @Setter
+    @Column(name = "idade")
+    private Integer idade;
+
 
     public Usuario(){}
 
-    public Usuario(Long id,String nomeUsuario, String telefone, Signos signoUsuario,byte[] imagemPerfil, String endereco) {
+    public Usuario(Long id, String nomeUsuario, String telefone, Signos signoUsuario, byte[] imagemPerfil, String endereco, Integer idade) {
         this.id = id;
         this.nomeUsuario = nomeUsuario;
         this.telefone = telefone;
         this.signoUsuario = signoUsuario;
         this.imagemPerfil = imagemPerfil;
         this.endereco = endereco;
+        this.idade = idade;
     }
+
 
     public String getNomeUsuario() {
         return nomeUsuario;

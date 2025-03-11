@@ -30,9 +30,12 @@ public class MapsService {
 
                 String distance = leg.get("distance").get("text").asText();
                 String duration = leg.get("duration").get("text").asText();
-                String polyline = route.get("overview_polyline").get("points").asText();
 
-                return String.format("Distância: %s\nTempo Estimado: %s\nPolyline: %s", distance, duration, polyline);
+                // Não incluir a polyline
+                // String polyline = route.get("overview_polyline").get("points").asText();
+
+                // Retornar a resposta sem a polyline
+                return String.format("Distância: %s\nTempo Estimado: %s", distance, duration);
             }
         } catch (Exception e) {
             return "Erro ao processar a resposta da API";
