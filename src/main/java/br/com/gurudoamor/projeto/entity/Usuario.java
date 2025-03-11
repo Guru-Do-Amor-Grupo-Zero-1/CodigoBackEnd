@@ -93,4 +93,12 @@ public class Usuario extends AbstractEntity{
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
+    }
 }
