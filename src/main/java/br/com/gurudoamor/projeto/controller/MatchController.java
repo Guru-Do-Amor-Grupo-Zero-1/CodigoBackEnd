@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/match")
+@RequestMapping("/api/match")
 @CrossOrigin("*")
 public class MatchController {
 
