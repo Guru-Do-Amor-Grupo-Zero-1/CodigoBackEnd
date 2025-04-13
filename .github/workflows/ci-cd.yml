@@ -1,4 +1,4 @@
-name: CI/CD para Spring Boot
+name: CI/CD para Spring Boot com Docker
 
 on:
   push:
@@ -47,5 +47,34 @@ jobs:
       - name: Executar testes
         run: mvn test -B
 
-      - name: Construir o projeto
-        run: mvn clean package -DskipTests -B
+  deploy:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar o repositório
+        uses: actions/checkout@v3
+
+      - name: Adicionar chave SSH da VM
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GCP_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.GCP_VM_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Copiar código para a VM
+        run: |
+          scp -r . ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }}:/home/${{ secrets.GCP_VM_USER }}/app
+
+      - name: Build e Run do Docker na VM
+        run: |
+          ssh ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }} << 'EOF'
+            cd /home/${{ secrets.GCP_VM_USER }}/backend
+
+            docker stop springboot-backend || true
+            docker rm springboot-backend || true
+
+            docker build -t springboot-backend .
+
+            docker run -d --name springboot-backend -p 8080:8080 springboot-backend
+          EOF
