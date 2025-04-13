@@ -1,7 +1,7 @@
 name: CI/CD para Spring Boot com Docker
 
 on:
-  push: #teste
+  push: #testee
     branches:
       - master
   pull_request:
