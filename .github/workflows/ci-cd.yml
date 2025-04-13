@@ -64,7 +64,7 @@ jobs:
 
       - name: Copiar código para a VM
         run: |
-          scp -r . ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }}:/home/${{ secrets.GCP_VM_USER }}/app
+          scp -r . ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }}:/home/${{ secrets.GCP_VM_USER }}/backend
 
       - name: Build e Run do Docker na VM
         run: |
