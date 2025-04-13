@@ -1,7 +1,7 @@
 name: CI/CD para Spring Boot com Docker
 
 on:
-  push:
+  push: #teste
     branches:
       - master
   pull_request:
@@ -72,7 +72,7 @@ jobs:
             cd /home/${{ secrets.GCP_VM_USER }}/backend
 
             docker stop springboot-backend || true
-            docker rm springboot-backend || true
+            docker rm springboot-backend || true 
 
             docker build -t springboot-backend .
 
