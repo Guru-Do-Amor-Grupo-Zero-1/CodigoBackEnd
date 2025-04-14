@@ -64,7 +64,6 @@ jobs:
 
       - name: Copiar código para a VM
         run: |
-          sudo apt-get update && sudo apt-get install -y rsync
           scp -r . ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }}:/home/${{ secrets.GCP_VM_USER }}/backend
 
       - name: Build e Run do Docker na VM
@@ -75,7 +74,7 @@ jobs:
             docker stop springboot-backend || true
             docker rm springboot-backend || true 
 
-            docker build --no-cache -t springboot-backend .
+            docker build -t springboot-backend .
 
-            docker run -d --name springboot-backend -p 5000:5000 springboot-backend 
+            docker run -d --name springboot-backend -p 8080:8080 springboot-backend 
           EOF
