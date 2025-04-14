@@ -62,9 +62,17 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.GCP_VM_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Instalar rsync no GitHub Actions
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
+      - name: Garantir rsync na VM
+        run: |
+          ssh ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }} "sudo apt-get update && sudo apt-get install -y rsync"
+
       - name: Copiar código para a VM (ignorando .git)
         run: |
           rsync -avz --exclude='.git' -e "ssh -i ~/.ssh/id_rsa" ./ ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }}:/home/${{ secrets.GCP_VM_USER }}/backend
+      
       
 
       - name: Build e Run do Docker na VM
