@@ -69,12 +69,10 @@ jobs:
         run: |
           ssh ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }} "sudo apt-get update && sudo apt-get install -y rsync"
 
-      - name: Copiar código para a VM (ignorando .git)
+      - name: Copiar código para a VM
         run: |
           rsync -avz --exclude='.git' -e "ssh -i ~/.ssh/id_rsa" ./ ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }}:/home/${{ secrets.GCP_VM_USER }}/backend
       
-      
-
       - name: Build e Run do Docker na VM
         run: |
           ssh ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_HOST }} << 'EOF'
